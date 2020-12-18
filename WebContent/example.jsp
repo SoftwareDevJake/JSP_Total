@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,6 +94,23 @@ for(int i = 1; i <= y; i++)
 	<%
 }
 %>
+
+<%
+	ArrayList<String> strList = new ArrayList<String>();
+
+	strList.add("안녕");
+	strList.add("반가워");
+	strList.add("잘가");
+	
+	
+	for(String str : strList) {
+		out.println(str);
+	}
+%>
+
+<c:forEach var="str" items="${strList }">
+	${str }
+</c:forEach>
 
 </body>
 </html>
