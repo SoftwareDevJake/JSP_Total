@@ -36,8 +36,22 @@
 		<%} %>
 	</table>
 	
+	<c:forEach var="article" items=${myData }>
+	<tr>
+		<td>${article.id}</td>
+		<td>${article.title}</td>
+		<td>${article.body}</td>
+		<td>${article.nickname}</td>
+		<td>${article.regDate}</td>
+		<td>${article.hit}</td>
+		<td>${article.likeCnt}</td>
+	</tr>
+	</c:forEach>
+	
+	<!-- 
 	<c:forEach var="i" begin="1" end="5">
 		<div>안녕</div>
 	</c:forEach>
+	 -->
 </body>
 </html>

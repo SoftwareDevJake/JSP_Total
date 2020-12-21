@@ -1,6 +1,7 @@
 package board;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -13,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import board.article.Article;
 import board.article.ArticleDao;
 
-@WebServlet("/testController")
-public class testController extends HttpServlet {
+@WebServlet("/article")
+public class Controller2 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -25,17 +26,37 @@ public class testController extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
-		request.setAttribute("myData", articles);
-		
 		String dest = "";
 		
-		if(action.equals("test"))
+		if(action.equals("list"))
 		{
-			dest = "/test.jsp";
-		}
-		else if(action.equals("list"))
-		{
+			request.setAttribute("myData", articles);
+			
 			dest = "/list.jsp";
+		}
+		else if(action.equals("insert"))
+		{
+			String title = request.getParameter("title");
+			String body = request.getParameter("body");
+			int mid = Integer.parseInt(request.getParameter("mid"));
+			
+			articleDao.insertArticle(title, body, mid);
+			
+		}
+		else if(action.equals("delete"))
+		{
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			
+			articleDao.deleteArticle(aid);
+			
+		}
+		else if(action.equals("update"))
+		{
+			String title = request.getParameter("title");
+			String body = request.getParameter("body");
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			
+			articleDao.updateArticle(title, body, aid);
 		}
 		else
 		{
