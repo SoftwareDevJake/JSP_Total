@@ -26,13 +26,11 @@ public class Controller2 extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
-		String dest = "";
+		String dest = "/WEB-INF/jsp/list.jsp";
 		
 		if(action.equals("list"))
 		{
 			request.setAttribute("myData", articles);
-			
-			dest = "/list.jsp";
 		}
 		else if(action.equals("insert"))
 		{
@@ -58,11 +56,20 @@ public class Controller2 extends HttpServlet {
 			
 			articleDao.updateArticle(title, body, aid);
 		}
-		else
+		else if(action.equals("detail"))
 		{
-			dest = "/#";
+			dest = "WEB-INF/jsp/detail.jsp";
+			
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			
+			Article article = articleDao.getArticleById(aid);
+			
+			request.setAttribute("myData2", article);
 		}
 		
+		request.setAttribute("myData", articleDao.getArticles());
+		
+		// 3. 요청하기
 		RequestDispatcher rd = request.getRequestDispatcher(dest);
 		rd.forward(request, response);
 	}

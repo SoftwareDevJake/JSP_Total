@@ -12,7 +12,7 @@
 <body>
 
 <% ArrayList<Article> articles = (ArrayList<Article>)request.getAttribute("myData"); %>
-
+<!-- 
 	<table border="1">
 		<tr>
 			<td>번호</td>
@@ -35,19 +35,34 @@
 		</tr>
 		<%} %>
 	</table>
+	 -->
 	
-	<c:forEach var="article" items=${myData }>
-	<tr>
-		<td>${article.id}</td>
-		<td>${article.title}</td>
-		<td>${article.body}</td>
-		<td>${article.nickname}</td>
-		<td>${article.regDate}</td>
-		<td>${article.hit}</td>
-		<td>${article.likeCnt}</td>
-	</tr>
-	</c:forEach>
+	<table border="1">
+		<tr>
+			<td>번호</td>
+			<td>제목</td>
+			<td>내용</td>
+			<td>작성자</td>
+			<td>작성일</td>
+			<td>조회수</td>
+			<td>좋아요</td>
+		</tr>
+		<c:forEach var="article" items="${myData}" >
+			<tr>
+				<td>${article.id}</td>
+				<td><a href="/JSP_total/article?action=detail&aid=${article.id}">${article.title}_${article.id}</a></td>
+				<td>${article.body}</td>
+				<td>${article.nickname}</td>
+				<td>${article.regDate}</td>
+				<td>${article.hit}</td>
+				<td>${article.likeCnt}</td>
+			</tr>
+		</c:forEach>
+	</table>
 	
+	<a href="/JSP_total/article?action=insert&title=aaa&body=bbb&mid=1">글쓰기</a>
+
+
 	<!-- 
 	<c:forEach var="i" begin="1" end="5">
 		<div>안녕</div>
