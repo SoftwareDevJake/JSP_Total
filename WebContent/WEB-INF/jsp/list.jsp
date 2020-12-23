@@ -50,7 +50,7 @@
 		<c:forEach var="article" items="${myData}" >
 			<tr>
 				<td>${article.id}</td>
-				<td><a href="/JSP_total/article?action=detail&aid=${article.id}">${article.title}_${article.id}</a></td>
+				<td><a href="/JSP/article?action=detail&aid=${article.id}">${article.title}_${article.id}</a></td>
 				<td>${article.body}</td>
 				<td>${article.nickname}</td>
 				<td>${article.regDate}</td>
@@ -60,7 +60,7 @@
 		</c:forEach>
 	</table>
 	
-	<a href="/JSP_total/article?action=insert&title=aaa&body=bbb&mid=1">글쓰기</a>
+	<a href="/JSP/article?action=showAdd">글쓰기</a>
 
 
 	<!-- 

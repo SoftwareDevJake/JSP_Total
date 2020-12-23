@@ -39,7 +39,6 @@ public class Controller2 extends HttpServlet {
 			int mid = Integer.parseInt(request.getParameter("mid"));
 			
 			articleDao.insertArticle(title, body, mid);
-			
 		}
 		else if(action.equals("delete"))
 		{
@@ -55,6 +54,7 @@ public class Controller2 extends HttpServlet {
 			int aid = Integer.parseInt(request.getParameter("aid"));
 			
 			articleDao.updateArticle(title, body, aid);
+//			dest = "WEB-INF/jsp/updateFrom.jsp";
 		}
 		else if(action.equals("detail"))
 		{
@@ -65,6 +65,20 @@ public class Controller2 extends HttpServlet {
 			Article article = articleDao.getArticleById(aid);
 			
 			request.setAttribute("myData2", article);
+		}
+		else if(action.equals("showAdd"))
+		{
+			dest = "WEB-INF/jsp/addForm.jsp";
+		}
+		else if(action.equals("showUpdate"))
+		{
+			dest = "WEB-INF/jsp/updateForm.jsp";
+			
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			
+			Article article = articleDao.getArticleById(aid);
+			
+			request.setAttribute("myData3", article);
 		}
 		
 		request.setAttribute("myData", articleDao.getArticles());

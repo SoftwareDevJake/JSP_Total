@@ -16,8 +16,8 @@
 내용 : ${myData2.body}
 <hr>
 
-<a href="/JSP_total/article?action=update&title=abc&body=def&aid=${myData2.id }">수정</a>
-<a href="/JSP_total/article?action=delete&aid=${myData2.id }">삭제</a>
+<a href="/JSP/article?action=showUpdate&aid=${myData2.id }">수정</a>
+<a href="/JSP/article?action=delete&aid=${myData2.id }">삭제</a>
 
 </body>
 </html>
