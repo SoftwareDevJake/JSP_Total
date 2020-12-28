@@ -36,6 +36,15 @@
 		<%} %>
 	</table>
 	 -->
+	<c:choose>
+		<c:when test="${memberData2 != null }">
+			환영합니다 ${memberData2.nickname  }님!
+		</c:when>
+		<c:otherwise>
+			<a href="/JSP/article?action=doLogin">로그인하기</a>
+			<a href="/JSP/article?action=doInsertMember">회원가입하기</a>
+		</c:otherwise>
+	</c:choose>
 	
 	<table border="1">
 		<tr>

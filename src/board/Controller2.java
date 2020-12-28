@@ -1,7 +1,6 @@
 package board;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -13,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.article.Article;
 import board.article.ArticleDao;
+import board.member.Member;
+import board.member.MemberDao;
 
 @WebServlet("/article")
 public class Controller2 extends HttpServlet {
@@ -22,7 +23,9 @@ public class Controller2 extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		ArticleDao articleDao = new ArticleDao();
+		MemberDao memberDao = new MemberDao();
 		ArrayList<Article> articles = articleDao.getArticles();
+		ArrayList<Member> members = memberDao.getMembers();
 		
 		String action = request.getParameter("action");
 		
@@ -31,6 +34,13 @@ public class Controller2 extends HttpServlet {
 		if(action.equals("list"))
 		{
 			request.setAttribute("myData", articles);
+			
+			String id = request.getParameter("id");
+			String pw = request.getParameter("pw");
+			
+			Member member = memberDao.getMemberByLoginIdAndLoginPw(id, pw);
+			
+			request.setAttribute("memberData2", member);
 		}
 		else if(action.equals("insert"))
 		{
@@ -80,7 +90,39 @@ public class Controller2 extends HttpServlet {
 			
 			request.setAttribute("myData3", article);
 		}
-		
+		else if(action.equals("doLogin"))
+		{
+			String loginId = request.getParameter("loginId");  
+			String loginPw = request.getParameter("loginPw");
+			
+			Member loginedMember = memberDao.getMemberByLoginIdAndLoginPw(loginId, loginPw);
+			
+			if(loginedMember != null)
+			{
+				dest = "WEB-INF/jsp/showMember.jsp";
+			}
+			else
+			{
+				dest = "WEB-INF/jsp/loginFailed.jsp";
+			}
+			
+			request.setAttribute("memberData", loginedMember);
+		}
+		else if(action.equals("doInsertMember"))
+		{
+			dest = "WEB-INF/jsp/signupForm.jsp";
+			
+			String id = request.getParameter("id");
+			String pw = request.getParameter("pw");
+			String nm = request.getParameter("nm");
+			
+			memberDao.insertMember(id, pw, nm);
+		}
+		else if(action.equals("showMember"))
+		{
+			dest = "WEB-INF/jsp/signupForm.jsp";
+		}
+			
 		request.setAttribute("myData", articleDao.getArticles());
 		
 		// 3. 요청하기
