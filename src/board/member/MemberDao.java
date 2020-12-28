@@ -1,5 +1,7 @@
 package board.member;
 
+import java.util.ArrayList;
+
 import board.DBUtil;
 
 public class MemberDao {
@@ -15,4 +17,9 @@ public class MemberDao {
 		return db.getRow(sql, new MemberRowMapper(), id, pw);
 	}
 	
+	public ArrayList<Member> getMembers()
+	{
+		String sql = "select * from member";
+		return db.getRows(sql, new MemberRowMapper());
+	}
 }
