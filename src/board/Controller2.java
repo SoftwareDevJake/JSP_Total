@@ -40,13 +40,17 @@ public class Controller2 extends HttpServlet {
 			
 			Member member = memberDao.getMemberByLoginIdAndLoginPw(id, pw);
 			
-			request.setAttribute("memberData2", member);
+			request.setAttribute("memberData", member);
 		}
 		else if(action.equals("insert"))
 		{
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
 			int mid = Integer.parseInt(request.getParameter("mid"));
+			
+			Member member = memberDao.getMemberById(mid);
+			
+			request.setAttribute("memberData", member);
 			
 			articleDao.insertArticle(title, body, mid);
 		}
@@ -78,6 +82,12 @@ public class Controller2 extends HttpServlet {
 		}
 		else if(action.equals("showAdd"))
 		{
+			int mid = Integer.parseInt(request.getParameter("mid"));
+			
+			Member member = memberDao.getMemberById(mid);
+			
+			request.setAttribute("memberData", member);
+			
 			dest = "WEB-INF/jsp/addForm.jsp";
 		}
 		else if(action.equals("showUpdate"))
@@ -103,13 +113,12 @@ public class Controller2 extends HttpServlet {
 			if(loginedMember != null)
 			{
 				dest = "WEB-INF/jsp/list.jsp";
+				request.setAttribute("memberData", loginedMember);
 			}
 			else
 			{
 				dest = "WEB-INF/jsp/loginFailed.jsp";
 			}
-
-			request.setAttribute("memberData", loginedMember);
 		}
 		else if(action.equals("doInsertMember"))
 		{
@@ -125,7 +134,20 @@ public class Controller2 extends HttpServlet {
 		{
 			dest = "WEB-INF/jsp/signupForm.jsp";
 		}
+		else if(action.equals("logout"))
+		{
+			String id = request.getParameter("id");
+			String pw = request.getParameter("pw");
 			
+			Member member = memberDao.getMemberByLoginIdAndLoginPw(id, pw);
+			
+			member = null;
+			
+			request.setAttribute("memberData", member);
+			
+			dest = "WEB-INF/jsp/list.jsp";
+		}
+		
 		request.setAttribute("myData", articleDao.getArticles());
 		
 		// 3. 요청하기

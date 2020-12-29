@@ -37,8 +37,14 @@
 	</table>
 	 -->
 	<c:choose>
-		<c:when test="${memberData2 != null }">
-			환영합니다 ${memberData2.nickname  }님!
+		<c:when test="${memberData != null }">
+			환영합니다 ${memberData.nickname  }님!
+			<form action="/JSP_total/article">
+				<input type="hidden" name="action" value="logout"/>
+				<input type="hidden" name="loginId" value="${memberData.loginId}"/>
+				<input type="hidden" name="loginPw" value="${memberData.loginPw}"/>
+				<input type="submit" value="로그아웃"/>
+			</form>
 		</c:when>
 		<c:otherwise>
 			<a href="/JSP_total/article?action=showLogin">로그인하기</a>
@@ -59,8 +65,14 @@
 		<c:forEach var="article" items="${myData}" >
 			<tr>
 				<td>${article.id}</td>
-				<td><a href="/JSP_total/article?action=detail&aid=${article.id}">${article.title}_${article.id}</a></td>
-				<td>${article.body}</td>
+				<c:choose>
+					<c:when test="${memberData == null }">
+						<td><a href="/JSP_total/article?action=showLogin">${article.title}_${article.id}</a></td>
+					</c:when>
+					<c:otherwise>
+						<td><a href="/JSP_total/article?action=detail&aid=${article.id}">${article.title}_${article.id}</a></td>	
+					</c:otherwise>
+				</c:choose>
 				<td>${article.nickname}</td>
 				<td>${article.regDate}</td>
 				<td>${article.hit}</td>
@@ -69,8 +81,15 @@
 		</c:forEach>
 	</table>
 	
-	<a href="/JSP_total/article?action=showAdd">글쓰기</a>
-
+	<c:choose>
+		<c:when test="${memberData == null }">
+			<a href="/JSP_total/article?action=showLogin">${article.title}_${article.id}</a>
+		</c:when>
+		<c:otherwise>
+			<a href="/JSP_total/article?action=showAdd&mid=${memberData.id }">글쓰기</a>	
+		</c:otherwise>
+	</c:choose>
+	
 
 	<!-- 
 	<c:forEach var="i" begin="1" end="5">

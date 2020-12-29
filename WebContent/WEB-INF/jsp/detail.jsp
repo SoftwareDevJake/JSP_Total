@@ -18,6 +18,6 @@
 
 	<a href="/JSP_total/article?action=showUpdate&aid=${myData2.id }">수정</a>
 	<a href="/JSP_total/article?action=delete&aid=${myData2.id }">삭제</a>
-
+	<a href="/JSP_total/article?action=list&mid=${memberData.id }">홈으로</a>
 </body>
 </html>

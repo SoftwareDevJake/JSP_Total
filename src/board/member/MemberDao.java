@@ -22,4 +22,10 @@ public class MemberDao {
 		String sql = "select * from member";
 		return db.getRows(sql, new MemberRowMapper());
 	}
+	
+	public Member getMemberById(int mid)
+	{
+		String sql = "select * from member where id = ?";
+		return db.getRow(sql, new MemberRowMapper(), mid);
+	}
 }
