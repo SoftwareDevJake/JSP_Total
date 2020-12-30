@@ -9,12 +9,21 @@ public class Article {
 	private String regDate;
 	private int hit;
 	private int likeCnt;
+	private int mid;
+
+	public int getMid() {
+		return mid;
+	}
+
+	public void setMid(int mid) {
+		this.mid = mid;
+	}
 
 	public Article() {
 
 	}
 	
-	public Article(int id, String title, String nickname, String body, String regDate, int hit, int likeCnt) {
+	public Article(int id, String title, String nickname, String body, String regDate, int hit, int likeCnt, int mid) {
 		this.id = id;
 		this.title = title;
 		this.nickname = nickname;
@@ -22,6 +31,7 @@ public class Article {
 		this.regDate = regDate;
 		this.hit = hit;
 		this.likeCnt = likeCnt;
+		this.mid = mid;
 	}
 
 	public int getId() {

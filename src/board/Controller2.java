@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import board.article.Article;
 import board.article.ArticleDao;
@@ -34,23 +35,12 @@ public class Controller2 extends HttpServlet {
 		if(action.equals("list"))
 		{
 			request.setAttribute("myData", articles);
-			
-			String id = request.getParameter("id");
-			String pw = request.getParameter("pw");
-			
-			Member member = memberDao.getMemberByLoginIdAndLoginPw(id, pw);
-			
-			request.setAttribute("memberData", member);
 		}
 		else if(action.equals("insert"))
 		{
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
 			int mid = Integer.parseInt(request.getParameter("mid"));
-			
-			Member member = memberDao.getMemberById(mid);
-			
-			request.setAttribute("memberData", member);
 			
 			articleDao.insertArticle(title, body, mid);
 		}
@@ -77,17 +67,18 @@ public class Controller2 extends HttpServlet {
 			int aid = Integer.parseInt(request.getParameter("aid"));
 			
 			Article article = articleDao.getArticleById(aid);
+			System.out.println("mid = " + article.getMid());
 			
 			request.setAttribute("myData2", article);
+			
+//			int mid = Integer.parseInt(request.getParameter("mid"));
+//			
+//			Member member = memberDao.getMemberById(mid);
+//			
+//			request.setAttribute("memberData2", member);
 		}
 		else if(action.equals("showAdd"))
 		{
-			int mid = Integer.parseInt(request.getParameter("mid"));
-			
-			Member member = memberDao.getMemberById(mid);
-			
-			request.setAttribute("memberData", member);
-			
 			dest = "WEB-INF/jsp/addForm.jsp";
 		}
 		else if(action.equals("showUpdate"))
@@ -113,7 +104,12 @@ public class Controller2 extends HttpServlet {
 			if(loginedMember != null)
 			{
 				dest = "WEB-INF/jsp/list.jsp";
-				request.setAttribute("memberData", loginedMember);
+				
+				//session 저장소 저장하는 법
+				HttpSession session = request.getSession();
+				session.setAttribute("loginedMember", loginedMember);
+				
+				//request.setAttribute("memberData", loginedMember);
 			}
 			else
 			{

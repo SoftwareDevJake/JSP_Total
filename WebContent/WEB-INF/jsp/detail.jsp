@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,9 +16,13 @@
 	<hr>
 	내용 : ${myData2.body}
 	<hr>
+	
 
-	<a href="/JSP_total/article?action=showUpdate&aid=${myData2.id }">수정</a>
-	<a href="/JSP_total/article?action=delete&aid=${myData2.id }">삭제</a>
-	<a href="/JSP_total/article?action=list&mid=${memberData.id }">홈으로</a>
+	<c:if test="${loginedMember == myData2.mid }">
+		<a href="/JSP_total/article?action=showUpdate&aid=${myData2.id }">수정</a>
+		<a href="/JSP_total/article?action=delete&aid=${myData2.id }">삭제</a>
+	</c:if>
+
+	<a href="/JSP_total/article?action=list">홈으로</a>
 </body>
 </html>
