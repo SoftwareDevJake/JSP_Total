@@ -13,7 +13,7 @@
 	<c:choose>
 		<c:when test="${loginedMember != null }">
 			환영합니다 ${loginedMember.nickname  }님!
-			<form action="/JSP_total/article">
+			<form action="/JSP_total/member">
 				<input type="hidden" name="action" value="logout"/>
 				<input type="hidden" name="loginId" value="${loginedMember.loginId}"/>
 				<input type="hidden" name="loginPw" value="${loginedMember.loginPw}"/>
@@ -21,8 +21,8 @@
 			</form>
 		</c:when>
 		<c:otherwise>
-			<a href="/JSP_total/article?action=showLogin">로그인하기</a>
-			<a href="/JSP_total/article?action=showMember">회원가입하기</a>
+			<a href="/JSP_total/member?action=showLogin">로그인하기</a>
+			<a href="/JSP_total/member?action=showMember">회원가입하기</a>
 		</c:otherwise>
 	</c:choose>
 	
@@ -40,7 +40,7 @@
 				<td>${article.id}</td>
 				<c:choose>
 					<c:when test="${loginedMember == null }">
-						<td><a href="/JSP_total/article?action=showLogin">${article.title}_${article.id}</a></td>
+						<td><a href="/JSP_total/member?action=showLogin">${article.title}_${article.id}</a></td>
 					</c:when>
 					<c:otherwise>
 						<td><a href="/JSP_total/article?action=detail&aid=${article.id}">${article.title}_${article.id}</a></td>	

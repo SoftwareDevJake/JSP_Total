@@ -21,6 +21,7 @@ public class App {
 	private List<Article> currentArticles = null; 
 	private Pagination currentPagination = null;
 	
+	
 	public void start() {
 		currentArticles = articleDao.getArticles();
 		currentPagination = new Pagination(currentArticles.size());

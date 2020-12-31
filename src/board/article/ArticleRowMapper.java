@@ -16,6 +16,7 @@ public class ArticleRowMapper implements RowMapper<Article> {
 		int hit = rs.getInt("hit");
 		int likeCnt = rs.getInt("likeCnt");
 		String regDate = rs.getString("regDate");
+		int mid = rs.getInt("mid");
 
 		Article article = new Article();
 		article.setTitle(title);
@@ -25,6 +26,7 @@ public class ArticleRowMapper implements RowMapper<Article> {
 		article.setHit(hit);
 		article.setLikeCnt(likeCnt);
 		article.setRegDate(regDate);
+		article.setMid(mid);
 		
 		return article;
 	}

@@ -18,7 +18,7 @@
 	<hr>
 	
 
-	<c:if test="${loginedMember == myData2.mid }">
+	<c:if test="${loginedMember.id == myData2.mid }">
 		<a href="/JSP_total/article?action=showUpdate&aid=${myData2.id }">수정</a>
 		<a href="/JSP_total/article?action=delete&aid=${myData2.id }">삭제</a>
 	</c:if>
