@@ -18,8 +18,6 @@ public class FrontController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=utf-8");
 		
-		System.out.println("== 공통 작업 코드 ==");
-		
 		// 요청 url 가져오기
 		String uri = request.getRequestURI();
 		

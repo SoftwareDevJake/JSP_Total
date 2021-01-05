@@ -12,8 +12,9 @@ import board.article.Reply;
 public class ArticleController2 {
 	
 	ArticleDao articleDao = new ArticleDao();
+	ArrayList<Reply> replies = new ArrayList<>();
 	
-	String doAction(HttpServletRequest request, HttpServletResponse response)
+	public String doAction(HttpServletRequest request, HttpServletResponse response)
 	{
 		String action = request.getParameter("action");		
 		String dest = "";
@@ -50,16 +51,42 @@ public class ArticleController2 {
 		{
 			dest = reply(request, response);
 		}
+//		else if(action.equals("doReply"))
+//		{
+//			dest = doReply(request, response);
+//		}
+		
+//		else if(action.equals("select"))
+//		{
+//			dest = "WEB-INF/jsp/selectTest.jsp";
+//		}
+//		else if(action.equals("doTest"))
+//		{
+//			String text = request.getParameter("text");
+//			String select = request.getParameter("select");
+//			String chkbox = request.getParameter("chkbox");
+//			
+//			System.out.println(text);
+//			System.out.println(select);
+//			System.out.println(chkbox);
+//		}
 		
 		request.setAttribute("myData", articleDao.getArticles());
 		
 		return dest;
 	}
 	
+//	private String doReply(HttpServletRequest request, HttpServletResponse response) {
+//		String body = request.getParameter("body");
+//		String nickname = request.getParameter("nickname");
+//		
+//		
+//		
+//		return detail(request, response);
+//	}
+
 	private String reply(HttpServletRequest request, HttpServletResponse response)
 	{
-		ArrayList<Reply> replies = new ArrayList<>();
-		
 		String body = request.getParameter("body");
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		
@@ -84,7 +111,10 @@ public class ArticleController2 {
 		
 		Article article = articleDao.getArticleById(aid);
 		
+		ArrayList<Reply> replies = articleDao.getRepliesByArticleId(aid);
+		
 		request.setAttribute("myData2", article);
+		request.setAttribute("replies", replies);
 		return "WEB-INF/jsp/detail.jsp";
 	}
 
@@ -105,7 +135,7 @@ public class ArticleController2 {
 		return detail(request, response);
 	}
 
-	private String list(HttpServletRequest request, HttpServletResponse response)
+	public String list(HttpServletRequest request, HttpServletResponse response)
 	{
 		ArrayList<Article> articles = articleDao.getArticles();
 		request.setAttribute("myData", articles);

@@ -10,7 +10,7 @@
 
 <h1> 회원가입 페이지 </h1>
 
-	<form action="/JSP_total/article">
+	<form action="/JSP_total/member">
 		아이디 입력 : <input type="text" name="id" placeholder="아이디"/> <br>
 		비밀번호 입력 : <input type="password" name="pw" placeholder="비밀번호"/> <br>
 		닉네임 입력 : <input type="text" name="nm" placeholder="닉네임"/>

@@ -12,8 +12,9 @@ import board.member.MemberDao;
 public class MemberController2 {
 	
 	MemberDao memberDao = new MemberDao();
+	ArticleController2 articleController2 = new ArticleController2();
 	
-	String doAction(HttpServletRequest request, HttpServletResponse response) throws IOException
+	public String doAction(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		String action = request.getParameter("action");		
 		String dest = "";
@@ -49,10 +50,12 @@ public class MemberController2 {
 		
 		memberDao.insertMember(id, pw, nm);
 		
-		return "WEB-INF/jsp/list.jsp";
+		
+		
+		return articleController2.list(request, response);
 	}
 
-	private String doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private String doLogin(HttpServletRequest request, HttpServletResponse response) {
 		String loginId = request.getParameter("loginId");  
 		String loginPw = request.getParameter("loginPw");
 		
@@ -79,6 +82,6 @@ public class MemberController2 {
 		
 		session.setAttribute("loginedMember", loginedMember);
 		 
-		return "WEB-INF/jsp/list.jsp";
+		return articleController2.list(request, response);
 	}
 }

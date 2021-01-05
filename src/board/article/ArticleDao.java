@@ -41,12 +41,12 @@ public class ArticleDao {
 	}
 	
 	public int insertReply(int aid, String body) {
-		String sql = "insert into reply set aid = ?, body = ?, writer = '익명', regDate = NOW()";
+		String sql = "insert into reply set aid = ?, body = ?, mid = '익명', regDate = NOW()";
 		return db.updateQuery(sql, aid, body);
 	}
 
 	public ArrayList<Reply> getRepliesByArticleId(int id) {
-		String sql = "select * from reply where aid = ?";
+		String sql = "SELECT * FROM reply INNER JOIN `member` m ON r.mid = m.id WHERE r.aid = ?";
 		return db.getRows(sql, new ReplyRowMapper(), id);
 	}
 
