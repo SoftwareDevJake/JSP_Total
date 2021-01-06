@@ -12,7 +12,7 @@ import board.article.Reply;
 public class ArticleController2 {
 	
 	ArticleDao articleDao = new ArticleDao();
-	ArrayList<Reply> replies = new ArrayList<>();
+	//ArrayList<Reply> replies = new ArrayList<>();
 	
 	public String doAction(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -51,10 +51,22 @@ public class ArticleController2 {
 		{
 			dest = reply(request, response);
 		}
-//		else if(action.equals("doReply"))
-//		{
-//			dest = doReply(request, response);
-//		}
+		else if(action.equals("doDeleteReply"))
+		{
+			dest = deleteReply(request, response);
+		}
+		else if(action.equals("doInsertReply"))
+		{
+			dest = doInsertReply(request, response);
+		}
+		else if(action.equals("showReplyUpdate"))
+		{
+			dest = showReplyUpdate(request, response);
+		}
+		else if(action.equals("doUpdateReply"))
+		{
+			dest = updateReply(request, response);
+		}
 		
 //		else if(action.equals("select"))
 //		{
@@ -76,23 +88,56 @@ public class ArticleController2 {
 		return dest;
 	}
 	
-//	private String doReply(HttpServletRequest request, HttpServletResponse response) {
-//		String body = request.getParameter("body");
+	private String updateReply(HttpServletRequest request, HttpServletResponse response) {
+
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		int rid = Integer.parseInt(request.getParameter("rid"));
+		
+		String body = request.getParameter("rbody");
+		
+		articleDao.updateReply(body, rid);
+		
+		return "redirect: /JSP_total/article?action=detail&aid=" + aid;
+	}
+
+	private String showReplyUpdate(HttpServletRequest request, HttpServletResponse response) {
+		
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		return "redirect: /JSP_total/article?action=detail&aid=" + aid + "&flag=u&rid=" + id;
+	}
+
+	private String doInsertReply(HttpServletRequest request, HttpServletResponse response) {
+		
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		int mid = Integer.parseInt(request.getParameter("mid"));
+		String body = request.getParameter("rbody");
 //		String nickname = request.getParameter("nickname");
-//		
-//		
-//		
-//		return detail(request, response);
-//	}
+		
+		articleDao.insertReply(aid, body, mid);
+		
+		return "redirect: /JSP_total/article?action=detail&aid=" + aid;
+	}
+	
+	private String deleteReply(HttpServletRequest request, HttpServletResponse response) {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		articleDao.deleteReplyById(id);
+		
+		return "redirect: /JSP_total/article?action=detail&id=" + aid;
+	}
 
 	private String reply(HttpServletRequest request, HttpServletResponse response)
 	{
 		String body = request.getParameter("body");
 		int aid = Integer.parseInt(request.getParameter("aid"));
+		int mid = Integer.parseInt(request.getParameter("mid"));
 		
-		articleDao.insertReply(aid, body);
-		replies = articleDao.getRepliesByArticleId(aid);
-		request.setAttribute("replyData", replies);
+		articleDao.insertReply(aid, body, mid);
+		ArrayList<Reply> replies = articleDao.getRepliesByArticleId(aid);
+		request.setAttribute("replies", replies);
 		
 		return detail(request, response);
 	}
@@ -107,14 +152,27 @@ public class ArticleController2 {
 	}
 
 	private String detail(HttpServletRequest request, HttpServletResponse response) {
+		
 		int aid = Integer.parseInt(request.getParameter("aid"));
+		String flag = request.getParameter("flag");
 		
 		Article article = articleDao.getArticleById(aid);
-		
 		ArrayList<Reply> replies = articleDao.getRepliesByArticleId(aid);
+		// flag 안나옴 **
+		// 댓글의 id 가 전부 0으로 들어옴
+		if(flag != null)
+		{
+			int rid = Integer.parseInt(request.getParameter("rid"));
+			request.setAttribute("flag", flag);
+			request.setAttribute("rid", rid);
+		}
+		
+		System.out.println(replies.size());
+		System.out.println(replies);
 		
 		request.setAttribute("myData2", article);
 		request.setAttribute("replies", replies);
+		
 		return "WEB-INF/jsp/detail.jsp";
 	}
 

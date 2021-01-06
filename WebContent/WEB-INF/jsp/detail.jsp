@@ -27,29 +27,44 @@
 	<a href="/JSP_total/article?action=list">홈으로</a>
 	
 <h2> 댓글 </h2>
-	<c:choose>
-	<c:when test="${replyData == null }">
-		댓글이 없습니다.
-	</c:when>
-	<c:otherwise>
-		<c:forEach var="reply" items="${replies }">
-			작성자 : ${reply.nickname } <br>
-			댓글 내용 : ${reply.body } <br>
-			등록 날짜 : ${reply.regDate } <br>
-		</c:forEach>
-	
-	</c:otherwise>
-	</c:choose>
-	
+
+	<c:forEach items="${replies}" var="reply" >
+		<c:choose>
+			<c:when test="${flag == 'u' && rid == reply.id}">
+				${loginedMember.nickname } <br>
+				<form action="/JSP_total/article">
+					<input type="text" name="rbody" value="${reply.body }"/>
+					<input type="hidden" name="rid" value="${reply.id }"/>
+					<input type="hidden" name="action" value="doUpdateReply"/>
+					<input type="hidden" name="aid" value="${myData2.id }"/>
+					<input type="submit" value="등록"/>
+				</form>
+			</c:when>
+			<c:otherwise>
+				${reply.nickname } <br>
+				${reply.body } <br>
+				${reply.regDate } 
+				reply.mid = ${reply.mid }
+				loginedMember.id = ${loginedMember.id }
+				<c:if test="${reply.mid == loginedMember.id }">
+					<a href="/JSP_total/article?action=showReplyUpdate&aid=${mydata2.id }&id=${reply.id }">수정</a>
+					<a href="/JSP_total/article?action=doDeleteReply&id=${reply.id }&aid=${myData2.id}">삭제</a>
+				</c:if>
+				<hr>
+				
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
 	<hr>
-	
+	${loginedMember.nickname } <br>
 	<form action="/JSP_total/article">
-		<input type="text" placeholder="댓글입력" name="body"/> <br>
+		<input type="text" placeholder="댓글을 남겨보세요" name="rbody"/>
 		<input type="hidden" name="mid" value="${loginedMember.id}"/>
-		<input type="hidden" name="action" value="reply"/>
+		<input type="hidden" name="action" value="doInsertReply"/>
 		<input type="hidden" name="aid" value="${myData2.id }"/>
-		<input type="submit" value="댓글 등록"/>
+		<input type="submit" value="등록"/>
 	</form>
+	<hr>
 	
 	
 </body>

@@ -171,7 +171,7 @@ public class App {
 				if (dcmd == 1) {
 					System.out.print("내용을 입력해주세요 :");
 					String body = sc.nextLine();
-					articleDao.insertReply(article.getId(), body);
+					articleDao.insertReply(article.getId(), body, loginedMember.getId());
 					ArrayList<Reply> replies2 = articleDao.getRepliesByArticleId(article.getId());
 					printArticle(article, replies2);
 				} else if (dcmd == 2) {

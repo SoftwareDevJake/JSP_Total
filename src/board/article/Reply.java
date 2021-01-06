@@ -5,6 +5,7 @@ public class Reply {
 
 	int id;
 	int parentId;
+	int mid;
 	String body;
 	String nickname;
 	String regDate;
@@ -13,15 +14,24 @@ public class Reply {
 		
 	}
 	
-	public Reply(int id, int parentId, String body, String nickname, String regDate) {
+	public Reply(int id, int parentId, int mid, String body, String nickname, String regDate) {
 		super();
 		this.id = id;
 		this.parentId = parentId;
 		this.body = body;
+		this.mid = mid;
 		this.nickname = nickname;
 		this.regDate = regDate;
 	}
 	
+	public int getMid() {
+		return mid;
+	}
+
+	public void setMid(int mid) {
+		this.mid = mid;
+	}
+
 	public int getId() {
 		return id;
 	}
