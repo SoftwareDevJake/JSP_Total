@@ -125,4 +125,56 @@ public class ArticleDao {
 		
 		db.updateQuery(sql, body, id);
 	}
+	
+	public ArrayList<Article> day()
+	{
+		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -1 DAY)";
+		
+		return db.getRows(sql, new ArticleRowMapper());
+	}
+	
+	public ArrayList<Article> week()
+	{
+		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -1 week)";
+		
+		return db.getRows(sql, new ArticleRowMapper());
+	}
+	
+	public ArrayList<Article> month()
+	{
+		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -1 month)";
+		
+		return db.getRows(sql, new ArticleRowMapper());
+	}
+	
+	public ArrayList<Article> half_year()
+	{
+		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -6 month)";
+		
+		return db.getRows(sql, new ArticleRowMapper());
+	}
+	
+	public ArrayList<Article> year()
+	{
+		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -1 year)";
+		
+		return db.getRows(sql, new ArticleRowMapper());
+	}
+
+	public ArrayList<Article> searchArticles(String searchType, int searchDate, String searchKeyword) {
+		
+		String dateInterval = "";
+		
+		if(searchDate == 3)
+		{
+			dateInterval = "-1 week";
+		}
+		
+		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL " + dateInterval +") AND " + searchType + " LIKE CONCAT_WS(?,'%','%')";
+		
+		System.out.println(sql);
+		
+		return db.getRows(sql, new ArticleRowMapper(), searchKeyword);
+	}
+
 }

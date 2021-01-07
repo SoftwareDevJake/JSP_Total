@@ -62,11 +62,31 @@
 		</c:otherwise>
 	</c:choose>
 	
+	검색
+	
+	<form action="/JSP_total/article">
+		<select name="searchDate">
+			<option value="1">전체기간</option>
+			<option value="2">1일</option>
+			<option value="3">1주</option>
+			<option value="4">1개월</option>
+			<option value="5">6개월</option>
+			<option value="6">1년</option>
+		</select>
+		<select name="searchType">
+			<option value="title">제목</option>
+			<option value="body">내용</option>
+			<option value="title_body">제목+내용</option>
+			<option value="nickname">작성자</option>
+			<option value="rbody">댓글내용</option>
+			<option value="rnickname">댓글작성자</option>
+		</select>
+		<input type="text" name="searchKeyword" placeholder="검색"/>
+		<input type="hidden" name="action" value="doSearch"/>
+		<input type="submit" value="검색"/>
+	</form>
+	
 
-	<!-- 
-	<c:forEach var="i" begin="1" end="5">
-		<div>안녕</div>
-	</c:forEach>
-	 -->
+
 </body>
 </html>

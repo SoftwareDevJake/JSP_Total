@@ -12,6 +12,7 @@ public class ReplyRowMapper implements RowMapper<Reply> {
 		int aid = rs.getInt("aid");
 		int id = rs.getInt("id");
 		String body = rs.getString("body");
+		int mid = rs.getInt("mid");
 		String nickname = rs.getString("nickname");
 		String regDate = rs.getString("regDate");
 
@@ -21,6 +22,7 @@ public class ReplyRowMapper implements RowMapper<Reply> {
 		reply.setNickname(nickname);
 		reply.setId(id);
 		reply.setRegDate(regDate);
+		reply.setMid(mid);
 		
 		return reply;
 	}

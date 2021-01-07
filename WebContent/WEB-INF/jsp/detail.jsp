@@ -44,10 +44,9 @@
 				${reply.nickname } <br>
 				${reply.body } <br>
 				${reply.regDate } 
-				reply.mid = ${reply.mid }
-				loginedMember.id = ${loginedMember.id }
+
 				<c:if test="${reply.mid == loginedMember.id }">
-					<a href="/JSP_total/article?action=showReplyUpdate&aid=${mydata2.id }&id=${reply.id }">수정</a>
+					<a href="/JSP_total/article?action=showReplyUpdate&aid=${myData2.id }&id=${reply.id }">수정</a>
 					<a href="/JSP_total/article?action=doDeleteReply&id=${reply.id }&aid=${myData2.id}">삭제</a>
 				</c:if>
 				<hr>

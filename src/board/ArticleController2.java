@@ -67,6 +67,10 @@ public class ArticleController2 {
 		{
 			dest = updateReply(request, response);
 		}
+		else if(action.equals("doSearch"))
+		{
+			dest = doSearch(request, response);
+		}
 		
 //		else if(action.equals("select"))
 //		{
@@ -88,6 +92,53 @@ public class ArticleController2 {
 		return dest;
 	}
 	
+	private String doSearch(HttpServletRequest request, HttpServletResponse response) {
+		
+		int searchDate = Integer.parseInt(request.getParameter("searchDate"));
+		String searchType = request.getParameter("searchType");
+		String searchKeyword = request.getParameter("searchKeyword");
+		
+		ArrayList<Article> searchedArticles = articleDao.searchArticles(searchType, searchDate, searchKeyword);
+//		
+//		ArrayList<Article> articles = new ArrayList<>();
+//============================searchType================================		
+//		if(searchType.equals("title"))
+//		{
+//			int searchFlag = 1;
+//			
+//			articles = articleDao.getSearchedArticles(searchFlag, searchKeyword);
+//		}
+//============================searchDate================================
+//		if(searchDate.equals("all"))
+//		{
+//			articles = articleDao.getArticles();
+//		}
+//		else if(searchDate.equals("day"))
+//		{
+//			articles = articleDao.day();
+//		}
+//		else if(searchDate.equals("week"))
+//		{
+//			articles = articleDao.week();
+//		}
+//		else if(searchDate.equals("month"))
+//		{
+//			articles = articleDao.month();
+//		}
+//		else if(searchDate.equals("half_year"))
+//		{
+//			articles = articleDao.half_year();
+//		}
+//		else if(searchDate.equals("year"))
+//		{
+//			articles = articleDao.year();
+//		}
+		
+		request.setAttribute("myData", searchedArticles);
+		
+		return "WEB-INF/jsp/list.jsp";
+	}
+
 	private String updateReply(HttpServletRequest request, HttpServletResponse response) {
 
 		int aid = Integer.parseInt(request.getParameter("aid"));
@@ -159,16 +210,12 @@ public class ArticleController2 {
 		Article article = articleDao.getArticleById(aid);
 		ArrayList<Reply> replies = articleDao.getRepliesByArticleId(aid);
 		// flag 안나옴 **
-		// 댓글의 id 가 전부 0으로 들어옴
 		if(flag != null)
 		{
 			int rid = Integer.parseInt(request.getParameter("rid"));
 			request.setAttribute("flag", flag);
 			request.setAttribute("rid", rid);
 		}
-		
-		System.out.println(replies.size());
-		System.out.println(replies);
 		
 		request.setAttribute("myData2", article);
 		request.setAttribute("replies", replies);
