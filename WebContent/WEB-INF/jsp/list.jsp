@@ -62,6 +62,18 @@
 		</c:otherwise>
 	</c:choose>
 	
+	<hr>
+	<c:if test="${pagenation.currentPageBlockNo != 1 }">
+		<a href="/JSP_total/article?action=list&pageNo=${pagination.startPageNoInCurrentBlock-1}">이전</a>
+	</c:if>
+	<c:forEach begin="${pagination.startPageNoInCurrentBlock }" end="${pagination.endPageNoInCurrentBlock }" var="i">
+		<a href="/JSP_total/article?action=list&pageNo=${i}">${i}</a> 
+	</c:forEach>
+	<c:if test="${pagenation.currentPageBlockNo != lastPageNo }">
+	<a href="/JSP_total/article?action=list&pageNo=${{pagination.endPageNoInCurrentBlock+1}">다음</a>
+	</c:if>
+	<hr>
+	
 	검색
 	
 	<form action="/JSP_total/article">

@@ -39,11 +39,6 @@ public class ArticleDao {
 		String sql = "SELECT a.*, m.nickname nickname, COUNT(l.aid) likeCnt FROM article a INNER JOIN `member` m ON a.mid = m.id LEFT JOIN `like` l ON a.id = l.aid GROUP BY a.id having a.id = ?";
 		return db.getRow(sql, new ArticleRowMapper(), aid);
 	}
-	
-//	public int insertReply(int aid, String body, int mid) {
-//		String sql = "insert into reply set aid = ?, body = ?, mid = ?, regDate = NOW()";
-//		return db.updateQuery(sql, aid, body, mid);
-//	}
 
 	public ArrayList<Reply> getRepliesByArticleId(int id) {
 		String sql = "SELECT * FROM reply r INNER JOIN `member` m ON r.mid = m.id WHERE r.aid = ?";
@@ -124,41 +119,6 @@ public class ArticleDao {
 		String sql = "UPDATE reply SET `body` = ? WHERE id = ?";
 		
 		db.updateQuery(sql, body, id);
-	}
-	
-	public ArrayList<Article> day()
-	{
-		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -1 DAY)";
-		
-		return db.getRows(sql, new ArticleRowMapper());
-	}
-	
-	public ArrayList<Article> week()
-	{
-		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -1 week)";
-		
-		return db.getRows(sql, new ArticleRowMapper());
-	}
-	
-	public ArrayList<Article> month()
-	{
-		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -1 month)";
-		
-		return db.getRows(sql, new ArticleRowMapper());
-	}
-	
-	public ArrayList<Article> half_year()
-	{
-		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -6 month)";
-		
-		return db.getRows(sql, new ArticleRowMapper());
-	}
-	
-	public ArrayList<Article> year()
-	{
-		String sql = "SELECT * FROM article WHERE regDate > DATE_ADD(NOW(), INTERVAL -1 year)";
-		
-		return db.getRows(sql, new ArticleRowMapper());
 	}
 
 	public ArrayList<Article> searchArticles(String searchType, int searchDate, String searchKeyword) {

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import board.article.Article;
 import board.article.ArticleDao;
+import board.article.Like;
 import board.article.Reply;
+import board.member.Member;
 
 public class ArticleController2 {
 	
@@ -71,6 +74,10 @@ public class ArticleController2 {
 		{
 			dest = doSearch(request, response);
 		}
+		else if(action.equals("doLikeCheck"))
+		{
+			dest = doLikeCheck(request, response);
+		}
 		
 //		else if(action.equals("select"))
 //		{
@@ -92,6 +99,27 @@ public class ArticleController2 {
 		return dest;
 	}
 	
+	private String doLikeCheck(HttpServletRequest request, HttpServletResponse response) {
+		
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		
+		HttpSession session = request.getSession();
+		int mid = ((Member)session.getAttribute("loginedMember")).getId();
+		
+		Like like = articleDao.getLike(aid, mid);
+		
+		if(like == null)
+		{
+			articleDao.insertLike(aid, mid);
+		}
+		else
+		{
+			articleDao.deleteLike(aid, mid);
+		}
+		
+		return "redirect: /JSP_total/article?action=detail&aid=" + aid;
+	}
+
 	private String doSearch(HttpServletRequest request, HttpServletResponse response) {
 		
 		int searchDate = Integer.parseInt(request.getParameter("searchDate"));
@@ -99,40 +127,6 @@ public class ArticleController2 {
 		String searchKeyword = request.getParameter("searchKeyword");
 		
 		ArrayList<Article> searchedArticles = articleDao.searchArticles(searchType, searchDate, searchKeyword);
-//		
-//		ArrayList<Article> articles = new ArrayList<>();
-//============================searchType================================		
-//		if(searchType.equals("title"))
-//		{
-//			int searchFlag = 1;
-//			
-//			articles = articleDao.getSearchedArticles(searchFlag, searchKeyword);
-//		}
-//============================searchDate================================
-//		if(searchDate.equals("all"))
-//		{
-//			articles = articleDao.getArticles();
-//		}
-//		else if(searchDate.equals("day"))
-//		{
-//			articles = articleDao.day();
-//		}
-//		else if(searchDate.equals("week"))
-//		{
-//			articles = articleDao.week();
-//		}
-//		else if(searchDate.equals("month"))
-//		{
-//			articles = articleDao.month();
-//		}
-//		else if(searchDate.equals("half_year"))
-//		{
-//			articles = articleDao.half_year();
-//		}
-//		else if(searchDate.equals("year"))
-//		{
-//			articles = articleDao.year();
-//		}
 		
 		request.setAttribute("myData", searchedArticles);
 		
@@ -164,7 +158,6 @@ public class ArticleController2 {
 		int aid = Integer.parseInt(request.getParameter("aid"));
 		int mid = Integer.parseInt(request.getParameter("mid"));
 		String body = request.getParameter("rbody");
-//		String nickname = request.getParameter("nickname");
 		
 		articleDao.insertReply(aid, body, mid);
 		
@@ -243,7 +236,16 @@ public class ArticleController2 {
 	public String list(HttpServletRequest request, HttpServletResponse response)
 	{
 		ArrayList<Article> articles = articleDao.getArticles();
-		request.setAttribute("myData", articles);
+		Pagination pagination = new Pagination(articles.size());
+		
+		int pageNo = Integer.parseInt(request.getParameter("pageNo"));
+		
+		ArrayList<Article> articlesPerPage = articleDao.getArticlesForPaging(pagination);
+		pagination.setCurrentPageNo(pageNo);
+		pagination.setCurrentPageBlockNo(pageNo);
+		
+		request.setAttribute("myData", articlesPerPage);
+		request.setAttribute("pagination", pagination);
 		
 		return "WEB-INF/jsp/list.jsp";
 	}

@@ -9,6 +9,24 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<c:choose>
+	<c:when test="${loginedMember != null }">
+		환영합니다 ${loginedMember.nickname  }님!
+		<form action="/JSP_total/member">
+			<input type="hidden" name="action" value="logout"/>
+			<input type="hidden" name="loginId" value="${loginedMember.loginId}"/>
+			<input type="hidden" name="loginPw" value="${loginedMember.loginPw}"/>
+			<input type="submit" value="로그아웃"/>
+		</form>
+	</c:when>
+	<c:otherwise>
+		<a href="/JSP_total/member?action=showLogin">로그인하기</a>
+		<a href="/JSP_total/member?action=showMember">회원가입하기</a>
+	</c:otherwise>
+</c:choose>
+
+
 <h1> 게시물 상세보기 </h1>
 
 	번호 : ${myData2.id}
@@ -25,6 +43,8 @@
 	</c:if>
 
 	<a href="/JSP_total/article?action=list">홈으로</a>
+	<hr>
+	<a href="/JSP_total/article?action=doLikeCheck&aid=${myData2.id }">좋아요</a> ${myData2.likeCnt }
 	
 <h2> 댓글 </h2>
 

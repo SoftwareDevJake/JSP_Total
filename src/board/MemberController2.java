@@ -76,12 +76,14 @@ public class MemberController2 {
 
 	private String logout(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		Member loginedMember = (Member)session.getAttribute("loginedMember");
+//		Member loginedMember = (Member)session.getAttribute("loginedMember");
 		
-		loginedMember = null;
+//		loginedMember = null;
+		session.invalidate();
 		
-		session.setAttribute("loginedMember", loginedMember);
+//		session.setAttribute("loginedMember", loginedMember);
 		 
-		return articleController2.list(request, response);
+//		return articleController2.list(request, response);
+		return "redirect: /JSP_total/article?action=list";
 	}
 }

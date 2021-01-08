@@ -5,6 +5,7 @@ public class Pagination {
 	private int totalCountOfItems; // 모든 아이템의 수
 	private int itemCountPerPage; // 한 페이지당 출력될 게시물의 수
 	private int pageCountPerPageBlock; // 한 블럭당 출력될 페이지의 수
+	private int currentPageBlockNo; // 현재 페이지 블록 번호
 	
 	public Pagination() {
 		
@@ -13,8 +14,14 @@ public class Pagination {
 	public Pagination(int totalCountOfItems) {
 		this.currentPageNo = 1;
 		this.totalCountOfItems = totalCountOfItems;
-		this.itemCountPerPage = 3;
-		this.pageCountPerPageBlock = 5;
+		this.itemCountPerPage = 5;
+		this.pageCountPerPageBlock = 10;
+		this.currentPageBlockNo = 1;
+	}
+	
+	public void setCurrentPageBlockNo(int currentPageNo)
+	{
+		this.currentPageBlockNo = (int)Math.ceil((double)currentPageNo / pageCountPerPageBlock);
 	}
 	
 	public int getCurrentPageNo() {
@@ -44,7 +51,7 @@ public class Pagination {
 	
 	// 현재 페이지 번호를 이용해 페이지 블럭 계산 
 	public int getCurrentPageBlock() {
-		return (int)Math.ceil((double)currentPageNo / pageCountPerPageBlock);
+		return this.currentPageBlockNo;
 	}
 	
 	// 현재 페이지 블럭의 시작 번호를 계산
