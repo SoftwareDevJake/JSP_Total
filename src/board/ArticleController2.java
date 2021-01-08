@@ -94,7 +94,7 @@ public class ArticleController2 {
 //			System.out.println(chkbox);
 //		}
 		
-		request.setAttribute("myData", articleDao.getArticles());
+		//request.setAttribute("myData", articleDao.getArticles());
 		
 		return dest;
 	}
@@ -239,10 +239,10 @@ public class ArticleController2 {
 		Pagination pagination = new Pagination(articles.size());
 		
 		int pageNo = Integer.parseInt(request.getParameter("pageNo"));
-		
-		ArrayList<Article> articlesPerPage = articleDao.getArticlesForPaging(pagination);
 		pagination.setCurrentPageNo(pageNo);
 		pagination.setCurrentPageBlockNo(pageNo);
+		
+		ArrayList<Article> articlesPerPage = articleDao.getArticlesForPaging(pagination);
 		
 		request.setAttribute("myData", articlesPerPage);
 		request.setAttribute("pagination", pagination);

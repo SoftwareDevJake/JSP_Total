@@ -70,7 +70,7 @@
 		<a href="/JSP_total/article?action=list&pageNo=${i}">${i}</a> 
 	</c:forEach>
 	<c:if test="${pagenation.currentPageBlockNo != lastPageNo }">
-	<a href="/JSP_total/article?action=list&pageNo=${{pagination.endPageNoInCurrentBlock+1}">다음</a>
+	<a href="/JSP_total/article?action=list&pageNo=${pagination.endPageNoInCurrentBlock+1}">다음</a>
 	</c:if>
 	<hr>
 	
